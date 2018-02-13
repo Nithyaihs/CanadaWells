@@ -1,0 +1,1293 @@
+BEGIN HEADER
+   CharacterSet "CP1252"
+   ExportingTool "IBM InfoSphere DataStage Export"
+   ToolVersion "8"
+   ServerName "Q9CAL-1DINFAP03.IHS.INTERNAL.CORP"
+   ToolInstanceID "EP_NA_CDN_Wells"
+   MDISVersion "1.0"
+   Date "2018-02-13"
+   Time "01.54.02"
+   ServerVersion "11.3"
+END HEADER
+BEGIN DSJOB
+   Identifier "Jb_001_Ex_Pden_Prod_Zone"
+   DateModified "2016-09-27"
+   TimeModified "02.21.47"
+   BEGIN DSRECORD
+      Identifier "ROOT"
+      OLEType "CJobDefn"
+      Readonly "0"
+      Name "Jb_001_Ex_Pden_Prod_Zone"
+      NextID "76"
+      Container "V0"
+      FullDescription =+=+=+=
+
+This job is for extracting the PdenProdZone data  into a dataset
+=+=+=+=
+      JobVersion "56.0.0"
+      ControlAfterSubr "0"
+      Parameters "CParameters"
+      BEGIN DSSUBRECORD
+         Name "PS_CanandaWells_Database"
+         Prompt "PS_CanandaWells_Database parameters"
+         Default "(As pre-defined)"
+         ParamType "13"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "PS_CanandaWells_Path"
+         Prompt "PS_CanandaWells_Path parameters"
+         Default "(As pre-defined)"
+         ParamType "13"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "InvokeId"
+         Prompt "InvokeId"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "Province_Code"
+         Prompt "Province_Code"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      MetaBag "CMetaProperty"
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "AdvancedRuntimeOptions"
+         Value "#DSProjectARTOptions#"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "TraceMode"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "TraceSeq"
+         Value "1"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "TraceRecords"
+         Value "100"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "TraceSkip"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "TracePeriod"
+         Value "1"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "RecordJobPerformanceData"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "IdentList"
+         Value "oc_Pden_ProdZone"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "ClientCodePage"
+         Value "1252"
+      END DSSUBRECORD
+      NULLIndicatorPosition "0"
+      OrchestrateCode =+=+=+=
+#################################################################
+#### STAGE: ds_PdenProdZone
+## Operator
+copy
+## General options
+[ident('ds_PdenProdZone')]
+## Inputs
+0< [] 'oc_Pden_ProdZone:lnk_ProdZone.v'
+## Outputs
+0>| [ds] '[&"PS_CanandaWells_Path.ProcessingPath"]/PdenProdZone_Fac_Prev_[&"InvokeId"].ds'
+;
+
+#################################################################
+#### STAGE: oc_Pden_ProdZone
+## Operator
+pxbridge
+## Operator options
+-Orientation link
+-XMLProperties '<?xml version=\\'1.0\\' encoding=\\'UTF-16\\'?><Properties version=\\'1.1\\'><Common><Context type=\\'int\\'>1</Context><Variant type=\\'string\\'>10g</Variant><DescriptorVersion type=\\'string\\'>1.0</DescriptorVersion><PartitionType type=\\'int\\'>-1</PartitionType><RCP type=\\'int\\'>0</RCP></Common><Connection><Server modified=\\'1\\' type=\\'string\\'><![CDATA[[&"PS_CanandaWells_Database.DSNName"]]]></Server><Username modified=\\'1\\' type=\\'string\\'><![CDATA[[&"PS_CanandaWells_Database.UserName"]]]></Username><Password modified=\\'1\\' type=\\'string\\'><![CDATA[[&"PS_CanandaWells_Database.Password"]]]></Password><OSLevelAuthentication type=\\'bool\\'><![CDATA[0]]></OSLevelAuthentication><Version modified=\\'1\\' type=\\'string\\'><![CDATA[10g]]></Version></Connection><Usage><ReadMode type=\\'int\\'><![CDATA[0]]></ReadMode><GenerateSQL modified=\\'1\\' type=\\'bool\\'><![CDATA[0]]></GenerateSQL><EnableQuotedIDs type=\\'bool\\'><![CDATA[0]]></EnableQuotedIDs><SQL><SelectStatement collapsed=\\'1\\' modified=\\'1\\' type=\\'string\\'><![CDATA[SELECT PDEN_ID,PDEN_TYPE,SOURCE,STRAT_UNIT_ID,TOP_DEPTH,BASE_DEPTH,COMPLETION_TOP,COMPLETION_BASE,PROVINCE_STATE,ROW_CREATED_BY,ROW_CREATED_DATE,ROW_CHANGED_BY,ROW_CHANGED_DATE,ROW_QUALITY,STRAT_UNIT_AGE,BASE_STRAT_AGE,COMPLETION_DATE,PLUGBACK_DATE,STRAT_NAME_SET_ID FROM PDEN_PROD_ZONE where PROVINCE_STATE=\\'[&"Province_Code"]\\']]><ReadFromFileSelect type=\\'bool\\'><![CDATA[0]]></ReadFromFileSelect><Tables collapsed=\\'1\\'><Table type=\\'string\\'><![CDATA[PDEN_PROD_ZONE]]></Table></Tables><Parameters collapsed=\\'1\\'></Parameters><Columns collapsed=\\'1\\'><Column type=\\'string\\'><![CDATA[STRAT_NAME_SET_ID,STRAT_NAME_SET_ID,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[PLUGBACK_DATE,PLUGBACK_DATE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[COMPLETION_DATE,COMPLETION_DATE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[BASE_STRAT_AGE,BASE_STRAT_AGE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[STRAT_UNIT_AGE,STRAT_UNIT_AGE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[ROW_QUALITY,ROW_QUALITY,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[ROW_CHANGED_DATE,ROW_CHANGED_DATE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[ROW_CHANGED_BY,ROW_CHANGED_BY,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[ROW_CREATED_DATE,ROW_CREATED_DATE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[ROW_CREATED_BY,ROW_CREATED_BY,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[PROVINCE_STATE,PROVINCE_STATE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[COMPLETION_BASE,COMPLETION_BASE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[COMPLETION_TOP,COMPLETION_TOP,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[BASE_DEPTH,BASE_DEPTH,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[TOP_DEPTH,TOP_DEPTH,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[STRAT_UNIT_ID,STRAT_UNIT_ID,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[SOURCE,SOURCE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[PDEN_TYPE,PDEN_TYPE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[PDEN_ID,PDEN_ID,PDEN_PROD_ZONE]]></Column></Columns><WhereClause type=\\'string\\'><![CDATA[PROVINCE_STATE = \\'[&"Province_Code"]\\']]></WhereClause></SelectStatement></SQL><EnablePartitionedReads collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></EnablePartitionedReads><Transaction><IsolationLevel type=\\'int\\'><![CDATA[0]]></IsolationLevel><RecordCount type=\\'int\\'><![CDATA[2000]]></RecordCount><EndOfWave type=\\'int\\'><![CDATA[0]]></EndOfWave></Transaction><Session><ArraySize type=\\'int\\'><![CDATA[2000]]></ArraySize><PrefetchRowCount type=\\'int\\'><![CDATA[1]]></PrefetchRowCount><PrefetchMemorySize type=\\'int\\'><![CDATA[0]]></PrefetchMemorySize><PassLobLocator collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></PassLobLocator><BFILEasBLOB type=\\'bool\\'><![CDATA[0]]></BFILEasBLOB><TreatWarningsAsErrors type=\\'bool\\'><![CDATA[0]]></TreatWarningsAsErrors><TreatFetchTruncateAsError type=\\'bool\\'><![CDATA[1]]></TreatFetchTruncateAsError></Session><BeforeAfter collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></BeforeAfter><ApplicationFailoverControl collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></ApplicationFailoverControl><LimitRows collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></LimitRows></Usage></Properties >'
+-connector '{
+   variant=\\'10g\\', 
+   library=ccora10g, 
+   version=1.0, 
+   variantlist=\\'V1;10:"10g":ccora10g;11:"11g":ccora11g\\', 
+   versionlist=\\'1.0,1.0\\', 
+   name=OracleConnector
+}'
+-source 0 '{
+      DSDescription={PDEN_ID=\\'THE UNIQUE IDENTIFIER FOR THE PRODUCING ENTITY\\', PDEN_TYPE=\\'THE TYPE OF PRODUCTION ENTITY\\', SOURCE=\\'THE INDIVIDUAL\\, COMPANY\\, STATE\\, OR GOVERNMENT AGENCY DESIGNATED AS THE SOURCE OF INFORMATION FOR THIS ROW\\', STRAT_UNIT_ID=\\'UNIQUE IDENTIFIER FOR THE STRATIGRAPHIC UNIT\\', TOP_DEPTH=\\'MEASURED DEPTH FROM THE SURFACE TO THE TOP OF THE PRODUCING INTERVAL\\', BASE_DEPTH=\\'MEASURED DEPTH FROM THE SURFACE TO THE BASE OF THE PRODUCING INTERVAL\\', COMPLETION_TOP=\\'THE MEASURED DEPTH OF THE TOP OF THE COMPLETED INTERVAL\\', PROVINCE_STATE=\\'THE PROVINCE\\/STATE ASSIGNED TO THE WELL\\', ROW_CREATED_BY=\\'SYSTEM USER WHO CREATED THIS ROW OF DATA\\', ROW_CREATED_DATE=\\'DATE THAT THE ROW WAS CREATED\\', ROW_CHANGED_BY=\\'APPLICATION LOGIN ID OF THE USER WHO LAST CHANGED THE ROW\\', ROW_CHANGED_DATE=\\'SYSTEM DATE OF THE LAST TIME THE ROW WAS CHANGED\\', ROW_QUALITY=\\'A SET OF VALUES INDICATING THE QUALITY OF DATA IN THIS ROW\\', STRAT_UNIT_AGE=\\'THE NUMERIC VALUE ASSIGNED TO THE TOP OF THE FORMATION\\', BASE_STRAT_AGE=\\'A NUMERIC VALUE ASSIGNED TO THE BASE OF THE PRODUCING FORMATION AS THE PRODUCING FORMATION IS REPRESENTED ON A STRATIGRAPHIC CHART\\', COMPLETION_DATE=\\'COMPLETION_DATE\\:  The date corresponding to the first non\\-drilling status reported by the well\\.\\', PLUGBACK_DATE=\\'THE DATE THE PLUGBACK OPERATIONS WERE RUN ON THE WELL\\', STRAT_NAME_SET_ID=\\'A UNIQUE NAME OF THE THE SET OF STRATIGRAPAHIC NAMES\\'}, 
+      DSIsKey={PDEN_ID=1, PDEN_TYPE=1, SOURCE=1, STRAT_UNIT_ID=1}, 
+      DSSQLType={PDEN_ID=12, PDEN_TYPE=12, SOURCE=12, STRAT_UNIT_ID=12, TOP_DEPTH=3, BASE_DEPTH=3, COMPLETION_TOP=3, COMPLETION_BASE=3, PROVINCE_STATE=12, ROW_CREATED_BY=12, ROW_CREATED_DATE=11, ROW_CHANGED_BY=12, ROW_CHANGED_DATE=11, ROW_QUALITY=12, STRAT_UNIT_AGE=3, BASE_STRAT_AGE=3, COMPLETION_DATE=11, PLUGBACK_DATE=11, STRAT_NAME_SET_ID=12}, 
+      DSSQLPrecision={PDEN_ID=40, PDEN_TYPE=24, SOURCE=20, STRAT_UNIT_ID=20, TOP_DEPTH=9, BASE_DEPTH=9, COMPLETION_TOP=9, COMPLETION_BASE=9, PROVINCE_STATE=20, ROW_CREATED_BY=30, ROW_CHANGED_BY=30, ROW_QUALITY=20, STRAT_UNIT_AGE=12, BASE_STRAT_AGE=12, STRAT_NAME_SET_ID=20}, 
+      DSSQLScale={TOP_DEPTH=2, BASE_DEPTH=2, COMPLETION_TOP=2, COMPLETION_BASE=2}, 
+      DSNativeType={PDEN_ID=\\'VARCHAR2\\', PDEN_TYPE=\\'VARCHAR2\\', SOURCE=\\'VARCHAR2\\', STRAT_UNIT_ID=\\'VARCHAR2\\', TOP_DEPTH=\\'NUMBER\\', BASE_DEPTH=\\'NUMBER\\', COMPLETION_TOP=\\'NUMBER\\', COMPLETION_BASE=\\'NUMBER\\', PROVINCE_STATE=\\'VARCHAR2\\', ROW_CREATED_BY=\\'VARCHAR2\\', ROW_CREATED_DATE=\\'DATE\\', ROW_CHANGED_BY=\\'VARCHAR2\\', ROW_CHANGED_DATE=\\'DATE\\', ROW_QUALITY=\\'VARCHAR2\\', STRAT_UNIT_AGE=\\'NUMBER\\', BASE_STRAT_AGE=\\'NUMBER\\', COMPLETION_DATE=\\'DATE\\', PLUGBACK_DATE=\\'DATE\\', STRAT_NAME_SET_ID=\\'VARCHAR2\\'}, 
+      DSSchema=\\'record
+         (
+           PDEN_ID\\:string\\[max\\=40\\]\\;
+           PDEN_TYPE\\:string\\[max\\=24\\]\\;
+           SOURCE\\:string\\[max\\=20\\]\\;
+           STRAT_UNIT_ID\\:string\\[max\\=20\\]\\;
+           TOP_DEPTH\\:nullable decimal\\[9\\,2\\]\\;
+           BASE_DEPTH\\:nullable decimal\\[9\\,2\\]\\;
+           COMPLETION_TOP\\:nullable decimal\\[9\\,2\\]\\;
+           COMPLETION_BASE\\:nullable decimal\\[9\\,2\\]\\;
+           PROVINCE_STATE\\:string\\[max\\=20\\]\\;
+           ROW_CREATED_BY\\:nullable string\\[max\\=30\\]\\;
+           ROW_CREATED_DATE\\:nullable timestamp\\;
+           ROW_CHANGED_BY\\:nullable string\\[max\\=30\\]\\;
+           ROW_CHANGED_DATE\\:nullable timestamp\\;
+           ROW_QUALITY\\:nullable string\\[max\\=20\\]\\;
+           STRAT_UNIT_AGE\\:nullable decimal\\[12\\,0\\]\\;
+           BASE_STRAT_AGE\\:nullable decimal\\[12\\,0\\]\\;
+           COMPLETION_DATE\\:nullable timestamp\\;
+           PLUGBACK_DATE\\:nullable timestamp\\;
+           STRAT_NAME_SET_ID\\:nullable string\\[max\\=20\\]\\;
+         )\\'
+}'
+   
+
+## General options
+[ident('oc_Pden_ProdZone'); jobmon_ident('oc_Pden_ProdZone')]
+## Outputs
+0> [modify (
+  PDEN_ID:not_nullable string[max=40]=PDEN_ID;
+  PDEN_TYPE:not_nullable string[max=24]=PDEN_TYPE;
+  SOURCE:not_nullable string[max=20]=SOURCE;
+  STRAT_UNIT_ID:not_nullable string[max=20]=STRAT_UNIT_ID;
+  TOP_DEPTH:nullable decimal[9,2]=TOP_DEPTH;
+  BASE_DEPTH:nullable decimal[9,2]=BASE_DEPTH;
+  COMPLETION_TOP:nullable decimal[9,2]=COMPLETION_TOP;
+  COMPLETION_BASE:nullable decimal[9,2]=COMPLETION_BASE;
+  PROVINCE_STATE:not_nullable string[max=20]=PROVINCE_STATE;
+  ROW_CREATED_BY:nullable string[max=30]=ROW_CREATED_BY;
+  ROW_CREATED_DATE:nullable timestamp=ROW_CREATED_DATE;
+  ROW_CHANGED_BY:nullable string[max=30]=ROW_CHANGED_BY;
+  ROW_CHANGED_DATE:nullable timestamp=ROW_CHANGED_DATE;
+  ROW_QUALITY:nullable string[max=20]=ROW_QUALITY;
+  STRAT_UNIT_AGE:nullable decimal[12,0]=STRAT_UNIT_AGE;
+  BASE_STRAT_AGE:nullable decimal[12,0]=BASE_STRAT_AGE;
+  COMPLETION_DATE:nullable timestamp=COMPLETION_DATE;
+  PLUGBACK_DATE:nullable timestamp=PLUGBACK_DATE;
+  STRAT_NAME_SET_ID:nullable string[max=20]=STRAT_NAME_SET_ID;
+keep
+  PDEN_ID,PDEN_TYPE,SOURCE,STRAT_UNIT_ID,
+  TOP_DEPTH,BASE_DEPTH,COMPLETION_TOP,COMPLETION_BASE,
+  PROVINCE_STATE,ROW_CREATED_BY,ROW_CREATED_DATE,ROW_CHANGED_BY,
+  ROW_CHANGED_DATE,ROW_QUALITY,STRAT_UNIT_AGE,BASE_STRAT_AGE,
+  COMPLETION_DATE,PLUGBACK_DATE,STRAT_NAME_SET_ID;
+)] 'oc_Pden_ProdZone:lnk_ProdZone.v'
+;
+
+
+=+=+=+=
+      IsTemplate "0"
+      NLSLocale ",,,,"
+      JobType "3"
+      Category "\\Jobs\\AB_Production\\Jobs"
+      CenturyBreakYear "30"
+      NextAliasID "2"
+      ParameterFileDDName "DD00001"
+      ReservedWordCheck "1"
+      TransactionSize "0"
+      ValidationStatus "0"
+      Uploadable "0"
+      PgmCustomizationFlag "0"
+      JobReportFlag "0"
+      AllowMultipleInvocations "1"
+      Act2ActOverideDefaults "0"
+      Act2ActEnableRowBuffer "0"
+      Act2ActUseIPC "0"
+      Act2ActBufferSize "0"
+      Act2ActIPCTimeout "0"
+      ExpressionSemanticCheckFlag "0"
+      TraceOption "0"
+      EnableCacheSharing "0"
+      RuntimeColumnPropagation "0"
+      RelStagesInJobStatus "-1"
+      WebServiceEnabled "0"
+      MFProcessMetaData "0"
+      MFProcessMetaDataXMLFileExchangeMethod "0"
+      IMSProgType "0"
+      CopyLibPrefix "ARDT"
+      RecordPerformanceResults "0"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "V0"
+      OLEType "CContainerView"
+      Readonly "0"
+      Name "Job"
+      NextID "1"
+      IsTopLevel "0"
+      StageList "V75S0|V75S1|V75A2"
+      StageXPos "491|237|379"
+      StageYPos "184|180|31"
+      StageTypes "CCustomStage|CCustomStage.CC_GUI|ID_PALETTEJOBANNOTATION"
+      NextStageID "112"
+      SnapToGrid "2"
+      GridLines "0"
+      ZoomValue "100"
+      StageXSize "48|48|268"
+      StageYSize "48|48|59"
+      ContainerViewSizing "0044 0044 0579 0427 0000 0001 0120 0000"
+      StageNames "ds_PdenProdZone|oc_Pden_ProdZone| "
+      StageTypeIDs "PxDataSet|OracleConnectorPX| "
+      LinkNames " |lnk_ProdZone| "
+      LinkHasMetaDatas " |True| "
+      LinkTypes " |1| "
+      LinkNamePositionXs " |335| "
+      LinkNamePositionYs " |189| "
+      TargetStageIDs " |V75S0| "
+      SourceStageEffectiveExecutionModes " |2| "
+      SourceStageRuntimeExecutionModes " |2| "
+      TargetStageEffectiveExecutionModes " |2| "
+      TargetStageRuntimeExecutionModes " |2| "
+      LinkIsSingleOperatorLookup " |False| "
+      LinkIsSortSequential " |False| "
+      LinkSortMode " |0| "
+      LinkPartColMode " |1| "
+      LinkSourcePinIDs " |V75S1P1| "
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "V75A2"
+      OLEType "CAnnotation"
+      Readonly "0"
+      Name "V75A2"
+      NextID "0"
+      AnnotationType "2"
+      TextFont "MS Shell Dlg\\10\\0\\0\\0\\400\\0"
+      TextHorizontalJustification "0"
+      TextVerticalJustification "0"
+      TextColor "0"
+      BackgroundColor "8454143"
+      BackgroundTransparent "0"
+      BorderVisible "1"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "V75S0"
+      OLEType "CCustomStage"
+      Readonly "0"
+      Name "ds_PdenProdZone"
+      NextID "2"
+      InputPins "V75S0P1"
+      StageType "PxDataSet"
+      AllowColumnMapping "0"
+      NextRecordID "0"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "V75S0P1"
+      OLEType "CCustomInput"
+      Readonly "0"
+      Name "lnk_ProdZone"
+      Partner "V75S1|V75S1P1"
+      LinkType "1"
+      ConditionNotMet "fail"
+      LookupFail "fail"
+      Properties "CCustomProperty"
+      BEGIN DSSUBRECORD
+         Name "dataset"
+         Value "#PS_CanandaWells_Path.ProcessingPath#/PdenProdZone_Fac_Prev_#InvokeId#.ds"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "datasetmode"
+         Value ">| [ds"
+      END DSSUBRECORD
+      MetaBag "CMetaProperty"
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "RTColumnProp"
+         Value "0"
+      END DSSUBRECORD
+      TransactionSize "0"
+      TXNBehaviour "0"
+      EnableTxGroup "0"
+      LinkMinimised "0"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "V75S1"
+      OLEType "CCustomStage"
+      Readonly "0"
+      Name "oc_Pden_ProdZone"
+      NextID "2"
+      OutputPins "V75S1P1"
+      StageType "OracleConnectorPX"
+      AllowColumnMapping "0"
+      Properties "CCustomProperty"
+      BEGIN DSSUBRECORD
+         Name "VariantName"
+         Value "10g"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "VariantLibrary"
+         Value "ccora10g"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "VariantVersion"
+         Value "1.0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "SupportedVariants"
+         Value "V1;10:\"10g\":ccora10g;11:\"11g\":ccora11g"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "SupportedVariantsLibraries"
+         Value "ccora10g,ccora11g"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "SupportedVariantsVersions"
+         Value "1.0,1.0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "Orientation"
+         Value "link"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectFromLink"
+         Value "-1"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectThreshold"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectNumber"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectUsesPercentage"
+         Value "false"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "ConnectorName"
+         Value "OracleConnector"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "Engine"
+         Value "EE"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "Context"
+         Value "source"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "ConnectionString"
+         Value "/Connection/Server"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "Username"
+         Value "/Connection/Username"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "Password"
+         Value "/Connection/Password"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "xaoDbName"
+         Value "/Connection/xaoDbName"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "OSLevelAuthentication"
+         Value "/Connection/OSLevelAuthentication"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "XMLProperties"
+         Value "<?xml version='1.0' encoding='UTF-16'?><Properties version='1.1'><Common><Context type='int'>1</Context><Variant type='string'>10g</Variant><DescriptorVersion type='string'>1.0</DescriptorVersion><PartitionType type='int'>-1</PartitionType><RCP type='int'>0</RCP></Common><Connection><Server modified='1' type='string'><![CDATA[#PS_CanandaWells_Database.DSNName#]]></Server><Username modified='1' type='string'><![CDATA[#PS_CanandaWells_Database.UserName#]]></Username><Password modified='1' type='string'><![CDATA[#PS_CanandaWells_Database.Password#]]></Password><OSLevelAuthentication type='bool'><![CDATA[0]]></OSLevelAuthentication><Version modified='1' type='string'><![CDATA[10g]]></Version></Connection><Usage><ReadMode type='int'><![CDATA[0]]></ReadMode><GenerateSQL modified='1' type='bool'><![CDATA[0]]></GenerateSQL><EnableQuotedIDs type='bool'><![CDATA[0]]></EnableQuotedIDs><SQL><SelectStatement collapsed='1' modified='1' type='string'><![CDATA[SELECT PDEN_ID,PDEN_TYPE,SOURCE,STRAT_UNIT_ID,TOP_DEPTH,BASE_DEPTH,COMPLETION_TOP,COMPLETION_BASE,PROVINCE_STATE,ROW_CREATED_BY,ROW_CREATED_DATE,ROW_CHANGED_BY,ROW_CHANGED_DATE,ROW_QUALITY,STRAT_UNIT_AGE,BASE_STRAT_AGE,COMPLETION_DATE,PLUGBACK_DATE,STRAT_NAME_SET_ID FROM PDEN_PROD_ZONE where PROVINCE_STATE='#Province_Code#']]><ReadFromFileSelect type='bool'><![CDATA[0]]></ReadFromFileSelect><Tables collapsed='1'><Table type='string'><![CDATA[PDEN_PROD_ZONE]]></Table></Tables><Parameters collapsed='1'></Parameters><Columns collapsed='1'><Column type='string'><![CDATA[STRAT_NAME_SET_ID,STRAT_NAME_SET_ID,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[PLUGBACK_DATE,PLUGBACK_DATE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[COMPLETION_DATE,COMPLETION_DATE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[BASE_STRAT_AGE,BASE_STRAT_AGE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[STRAT_UNIT_AGE,STRAT_UNIT_AGE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[ROW_QUALITY,ROW_QUALITY,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[ROW_CHANGED_DATE,ROW_CHANGED_DATE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[ROW_CHANGED_BY,ROW_CHANGED_BY,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[ROW_CREATED_DATE,ROW_CREATED_DATE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[ROW_CREATED_BY,ROW_CREATED_BY,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[PROVINCE_STATE,PROVINCE_STATE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[COMPLETION_BASE,COMPLETION_BASE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[COMPLETION_TOP,COMPLETION_TOP,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[BASE_DEPTH,BASE_DEPTH,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[TOP_DEPTH,TOP_DEPTH,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[STRAT_UNIT_ID,STRAT_UNIT_ID,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[SOURCE,SOURCE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[PDEN_TYPE,PDEN_TYPE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[PDEN_ID,PDEN_ID,PDEN_PROD_ZONE]]></Column></Columns><WhereClause type='string'><![CDATA[PROVINCE_STATE = '#Province_Code#']]></WhereClause></SelectStatement></SQL><EnablePartitionedReads collapsed='1' type='bool'><![CDATA[0]]></EnablePartitionedReads><Transaction><IsolationLevel type='int'><![CDATA[0]]></IsolationLevel><RecordCount type='int'><![CDATA[2000]]></RecordCount><EndOfWave type='int'><![CDATA[0]]></EndOfWave></Transaction><Session><ArraySize type='int'><![CDATA[2000]]></ArraySize><PrefetchRowCount type='int'><![CDATA[1]]></PrefetchRowCount><PrefetchMemorySize type='int'><![CDATA[0]]></PrefetchMemorySize><PassLobLocator collapsed='1' type='bool'><![CDATA[0]]></PassLobLocator><BFILEasBLOB type='bool'><![CDATA[0]]></BFILEasBLOB><TreatWarningsAsErrors type='bool'><![CDATA[0]]></TreatWarningsAsErrors><TreatFetchTruncateAsError type='bool'><![CDATA[1]]></TreatFetchTruncateAsError></Session><BeforeAfter collapsed='1' type='bool'><![CDATA[0]]></BeforeAfter><ApplicationFailoverControl collapsed='1' type='bool'><![CDATA[0]]></ApplicationFailoverControl><LimitRows collapsed='1' type='bool'><![CDATA[0]]></LimitRows></Usage></Properties >"
+      END DSSUBRECORD
+      NextRecordID "0"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "V75S1P1"
+      OLEType "CCustomOutput"
+      Readonly "0"
+      Name "lnk_ProdZone"
+      Partner "V75S0|V75S0P1"
+      Properties "CCustomProperty"
+      BEGIN DSSUBRECORD
+         Name "lookup\\type"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "VariantName"
+         Value "10"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "VariantLibrary"
+         Value "ccora10g"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "VariantVersion"
+         Value "1.0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectFromLink"
+         Value "-1"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectThreshold"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectNumber"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectUsesPercentage"
+         Value "false"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "ConnectorName"
+         Value "OracleConnector"
+      END DSSUBRECORD
+      Columns "COutputColumn"
+      BEGIN DSSUBRECORD
+         Name "PDEN_ID"
+         Description "THE UNIQUE IDENTIFIER FOR THE PRODUCING ENTITY"
+         SqlType "12"
+         Precision "40"
+         Scale "0"
+         Nullable "0"
+         KeyPosition "1"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "1"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "VARCHAR2"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "PDEN_ID"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "PDEN_TYPE"
+         Description "THE TYPE OF PRODUCTION ENTITY"
+         SqlType "12"
+         Precision "24"
+         Scale "0"
+         Nullable "0"
+         KeyPosition "1"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "2"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "VARCHAR2"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "PDEN_TYPE"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "SOURCE"
+         Description "THE INDIVIDUAL, COMPANY, STATE, OR GOVERNMENT AGENCY DESIGNATED AS THE SOURCE OF INFORMATION FOR THIS ROW"
+         SqlType "12"
+         Precision "20"
+         Scale "0"
+         Nullable "0"
+         KeyPosition "1"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "3"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "VARCHAR2"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "SOURCE"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "STRAT_UNIT_ID"
+         Description "UNIQUE IDENTIFIER FOR THE STRATIGRAPHIC UNIT"
+         SqlType "12"
+         Precision "20"
+         Scale "0"
+         Nullable "0"
+         KeyPosition "1"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "4"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "VARCHAR2"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "STRAT_UNIT_ID"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "TOP_DEPTH"
+         Description "MEASURED DEPTH FROM THE SURFACE TO THE TOP OF THE PRODUCING INTERVAL"
+         SqlType "3"
+         Precision "9"
+         Scale "2"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "5"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "NUMBER"
+         Occurs "0"
+         PadNulls "0"
+         SignIndicator "S"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "TOP_DEPTH"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "BASE_DEPTH"
+         Description "MEASURED DEPTH FROM THE SURFACE TO THE BASE OF THE PRODUCING INTERVAL"
+         SqlType "3"
+         Precision "9"
+         Scale "2"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "6"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "NUMBER"
+         Occurs "0"
+         PadNulls "0"
+         SignIndicator "S"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "BASE_DEPTH"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "COMPLETION_TOP"
+         Description "THE MEASURED DEPTH OF THE TOP OF THE COMPLETED INTERVAL"
+         SqlType "3"
+         Precision "9"
+         Scale "2"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "7"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "NUMBER"
+         Occurs "0"
+         PadNulls "0"
+         SignIndicator "S"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "COMPLETION_TOP"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "COMPLETION_BASE"
+         SqlType "3"
+         Precision "9"
+         Scale "2"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "8"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "NUMBER"
+         Occurs "0"
+         PadNulls "0"
+         SignIndicator "S"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "COMPLETION_BASE"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "PROVINCE_STATE"
+         Description "THE PROVINCE/STATE ASSIGNED TO THE WELL"
+         SqlType "12"
+         Precision "20"
+         Scale "0"
+         Nullable "0"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "9"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "VARCHAR2"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "PROVINCE_STATE"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "ROW_CREATED_BY"
+         Description "SYSTEM USER WHO CREATED THIS ROW OF DATA"
+         SqlType "12"
+         Precision "30"
+         Scale "0"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "10"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "VARCHAR2"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "ROW_CREATED_BY"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "ROW_CREATED_DATE"
+         Description "DATE THAT THE ROW WAS CREATED"
+         SqlType "11"
+         Precision "0"
+         Scale "0"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "11"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "DATE"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "ROW_CREATED_DATE"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "ROW_CHANGED_BY"
+         Description "APPLICATION LOGIN ID OF THE USER WHO LAST CHANGED THE ROW"
+         SqlType "12"
+         Precision "30"
+         Scale "0"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "12"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "VARCHAR2"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "ROW_CHANGED_BY"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "ROW_CHANGED_DATE"
+         Description "SYSTEM DATE OF THE LAST TIME THE ROW WAS CHANGED"
+         SqlType "11"
+         Precision "0"
+         Scale "0"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "13"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "DATE"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "ROW_CHANGED_DATE"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "ROW_QUALITY"
+         Description "A SET OF VALUES INDICATING THE QUALITY OF DATA IN THIS ROW"
+         SqlType "12"
+         Precision "20"
+         Scale "0"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "14"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "VARCHAR2"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "ROW_QUALITY"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "STRAT_UNIT_AGE"
+         Description "THE NUMERIC VALUE ASSIGNED TO THE TOP OF THE FORMATION"
+         SqlType "3"
+         Precision "12"
+         Scale "0"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "15"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "NUMBER"
+         Occurs "0"
+         PadNulls "0"
+         SignIndicator "S"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "STRAT_UNIT_AGE"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "BASE_STRAT_AGE"
+         Description "A NUMERIC VALUE ASSIGNED TO THE BASE OF THE PRODUCING FORMATION AS THE PRODUCING FORMATION IS REPRESENTED ON A STRATIGRAPHIC CHART"
+         SqlType "3"
+         Precision "12"
+         Scale "0"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "16"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "NUMBER"
+         Occurs "0"
+         PadNulls "0"
+         SignIndicator "S"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "BASE_STRAT_AGE"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "COMPLETION_DATE"
+         Description "COMPLETION_DATE:  The date corresponding to the first non-drilling status reported by the well."
+         SqlType "11"
+         Precision "0"
+         Scale "0"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "17"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "DATE"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "COMPLETION_DATE"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "PLUGBACK_DATE"
+         Description "THE DATE THE PLUGBACK OPERATIONS WERE RUN ON THE WELL"
+         SqlType "11"
+         Precision "0"
+         Scale "0"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "18"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "DATE"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "PLUGBACK_DATE"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "STRAT_NAME_SET_ID"
+         Description "A UNIQUE NAME OF THE THE SET OF STRATIGRAPAHIC NAMES"
+         SqlType "12"
+         Precision "20"
+         Scale "0"
+         Nullable "1"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         TableDef "Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+         FieldPos "19"
+         AllowCRLF "0"
+         LevelNo "0"
+         NativeType "VARCHAR2"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ColumnReference "STRAT_NAME_SET_ID"
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      MetaBag "CMetaProperty"
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "DiskWriteInc"
+         Value "1048576"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "BufFreeRun"
+         Value "50"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "MaxMemBufSize"
+         Value "3145728"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "QueueUpperSize"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "SchemaFormat"
+      END DSSUBRECORD
+      LeftTextPos "335"
+      TopTextPos "189"
+      LinkMinimised "0"
+   END DSRECORD
+END DSJOB
+BEGIN DSEXECJOB
+   Identifier "Jb_001_Ex_Pden_Prod_Zone"
+   DateModified "1899-12-30"
+   TimeModified "00.00.01"
+   BEGIN DSRECORD
+      Identifier "Jb_001_Ex_Pden_Prod_Zone"
+      F1 "JOB"
+      F3 "11.3///60/C"
+      F5 "PS_CanandaWells_Database\VPS_CanandaWells_Database.DSNName\VPS_CanandaWells_Database.UserName\VPS_CanandaWells_Database.Password\VPS_CanandaWells_Database.DBName\VPS_CanandaWells_Database.DSNName2\VPS_CanandaWells_Database.UserName2\VPS_CanandaWells_Database.Password2\VPS_CanandaWells_Database.Db_Oracle_Schema\VPS_CanandaWells_Database.Db_Oracle_Common_Schema\VPS_CanandaWells_Database.Db_Oracle_Ntv_Schema\VPS_CanandaWells_Database.Db_Oracle_Ihs_Vlt\VPS_CanandaWells_Database.Db_Oracle_Ihs_Vlt_User\VPS_CanandaWells_Database.Db_Oracle_Ihs_Vlt_Pwd\VPS_CanandaWells_Database.Db_Oracle_Ihs_Vlt_Schema\VPS_CanandaWells_Path\VPS_CanandaWells_Path.SourcePath\VPS_CanandaWells_Path.ScriptPath\VPS_CanandaWells_Path.LookupPath\VPS_CanandaWells_Path.ProcessedPath\VPS_CanandaWells_Path.ProcessingPath\VPS_CanandaWells_Path.RejectPath\VPS_CanandaWells_Path.TargetPath\VPS_CanandaWells_Path.MainRejectPath\VPS_CanandaWells_Path.PreviousLoadPath\VPS_CanandaWells_Path.$APT_CONFIG_FILE\VPS_CanandaWells_Path.ArchivePath\VPS_CanandaWells_Path.Environment\VPS_CanandaWells_Path.DSPath\VPS_CanandaWells_Path.ControlRejectFile\VPS_CanandaWells_Path.UWIRejectFile\VPS_CanandaWells_Path.RejectOutPath\VPS_CanandaWells_Path.MailRejectOutPath\VInvokeId\VProvince_Code"
+      F6 "PS_CanandaWells_Database parameters\VDSNName\VUserName\VPassword\VDBName\VDSNName2\VUserName2\VPassword2\VDb_Oracle_Schema\VDb_Oracle_Common_Schema\VDb_Oracle_Ntv_Schema\VDb_Oracle_Ihs_Vlt\VDb_Oracle_Ihs_Vlt_User\VDb_Oracle_Ihs_Vlt_Pwd\VDb_Oracle_Ihs_Vlt_Schema\VPS_CanandaWells_Path parameters\VSourcePath\VScriptPath\VLookupPath\VProcessedPath\VProcessingPath\VRejectPath\VTargetPath\VMainRejectPath\VPreviousLoadPath\VConfiguration file\VArchivePath\VEnvironment\VDSPath\VControlRejectFile\VUWIRejectFile\VRejectOutPath\VMailRejectOutPath\VInvokeId\VProvince_Code"
+      F7 "(As pre-defined)\VDCALFCT\Vppdmca_fct\V{iisenc}DrfrYTqfSeEcbgAThDAgmA==\V\VDCALFCT\Vppdmca_ntv\V{iisenc}DrfrYTqfSeEcbgAThDAgmA==\VPPDMCA_FCT\VPPDMCA_COMMON\VPPDMCA_NTV\VDCALVLT\Vppdm37_ldr\V{iisenc}DrfrYTqfSeEcbgAThDAgmA==\VPPDM37_VLT\V(As pre-defined)\V/data/EP_NA_CDN_Wells/AB_Production/SourceFiles\V/data/EP_NA_CDN_Wells/AB_Production/Scripts\V/data/EP_NA_CDN_Wells/AB_Production/Lookup\V/data/EP_NA_CDN_Wells/AB_Production/Processed\V/data/EP_NA_CDN_Wells/AB_Production/Processing\V/data/EP_NA_CDN_Wells/AB_Production/RejectFiles\V/data/EP_NA_CDN_Wells/AB_Production/Target\V/data/EP_NA_CDN_Wells/AB_Production/MainReject\V/data/EP_NA_CDN_Wells/AB_Production/PreviousBckup\V/opt/IBM/InformationServer/Server/Configurations/EnergyPower_4NCanada.apt\V/data/EP_NA_CDN_Wells/AB_Production/SourceFiles/Done/\VDev\V/opt/IBM/InformationServer/Server/PXEngine/bin\VControl_Rejects.txt\VAB_Hist_UWI.bad\V /canadawelldata/scratch/\V\\\\calnas02\\\\well\\\\scratch\\\V\V"
+      F8 "\V\V\V\V\V\V\V\V\V\V\V\V\V\V\V\V\V\V\V\V\V\V\V\V\VThe Parallel job configuration file.\V\V\V\V\V\V\V\V\V"
+      F9 "13\V0\V0\V1\V0\V0\V0\V1\V0\V0\V0\V0\V0\V1\V0\V13\V0\V0\V0\V0\V0\V0\V0\V0\V0\V4\V0\V0\V0\V0\V0\V0\V0\V0\V0"
+      F10 "V0"
+      F12 "\(D)\(A)This job is for extracting the PdenProdZone data  into a dataset"
+      F15 "OracleConnectorPX\VPxDataSet"
+      F18 "(As pre-defined)\VDCALFCT\Vppdmca_fct\V{iisenc}DrfrYTqfSeEcbgAThDAgmA==\V\VDCALFCT\Vppdmca_ntv\V{iisenc}DrfrYTqfSeEcbgAThDAgmA==\VPPDMCA_FCT\VPPDMCA_COMMON\VPPDMCA_NTV\VDCALVLT\Vppdm37_ldr\V{iisenc}DrfrYTqfSeEcbgAThDAgmA==\VPPDM37_VLT\V(As pre-defined)\V/data/EP_NA_CDN_Wells/AB_Production/SourceFiles\V/data/EP_NA_CDN_Wells/AB_Production/Scripts\V/data/EP_NA_CDN_Wells/AB_Production/Lookup\V/data/EP_NA_CDN_Wells/AB_Production/Processed\V/data/EP_NA_CDN_Wells/AB_Production/Processing\V/data/EP_NA_CDN_Wells/AB_Production/RejectFiles\V/data/EP_NA_CDN_Wells/AB_Production/Target\V/data/EP_NA_CDN_Wells/AB_Production/MainReject\V/data/EP_NA_CDN_Wells/AB_Production/PreviousBckup\V/opt/IBM/InformationServer/Server/Configurations/EnergyPower_4NCanada.apt\V/data/EP_NA_CDN_Wells/AB_Production/SourceFiles/Done/\VDev\V/opt/IBM/InformationServer/Server/PXEngine/bin\VControl_Rejects.txt\VAB_Hist_UWI.bad\V /canadawelldata/scratch/\V\\\\calnas02\\\\well\\\\scratch\\\V\V"
+      F21 "1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1"
+      F24 ",,,,"
+      F28 "\\Jobs\\AB_Production\\Jobs"
+      F29 "0"
+      F30 "1"
+      F31 "2016-09-25 23:44:35"
+      F32 "3"
+      F34 "0\V1\VLINUX\V0\V\V#DSProjectARTOptions#\V1252\V\V\V\V\V\V0\V0"
+      F35 "oc_Pden_ProdZone"
+      F36 "q9cal-1dinfap03.ihs.internal.corp"
+      F37 "EP_NA_CDN_Wells"
+      F38 "0"
+      F39 "Jb_001_Ex_Pden_Prod_Zone.ds_PdenProdZone\VJb_001_Ex_Pden_Prod_Zone.oc_Pden_ProdZone"
+      F41 "0"
+      F43 ",,,,"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "Jb_001_Ex_Pden_Prod_Zone.ds_PdenProdZone"
+      F1 "STAGE"
+      F2 "CUSTOM"
+      F3 "11.3///60/C"
+      F4 "Jb_001_Ex_Pden_Prod_Zone"
+      F9 "Jb_001_Ex_Pden_Prod_Zone.oc_Pden_ProdZone.lnk_ProdZone"
+      F16 "PxDataSet"
+      F31 "Jb_001_Ex_Pden_Prod_Zone.ds_PdenProdZone"
+      F32 "-1.-1"
+      F40 "1"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "Jb_001_Ex_Pden_Prod_Zone.oc_Pden_ProdZone"
+      F1 "STAGE"
+      F2 "CUSTOM"
+      F3 "11.3///60/C"
+      F4 "Jb_001_Ex_Pden_Prod_Zone"
+      F10 "Jb_001_Ex_Pden_Prod_Zone.oc_Pden_ProdZone.lnk_ProdZone"
+      F13 "VariantName\VVariantLibrary\VVariantVersion\VSupportedVariants\VSupportedVariantsLibraries\VSupportedVariantsVersions\VOrientation\VRejectFromLink\VRejectThreshold\VRejectNumber\VRejectUsesPercentage\VConnectorName\VEngine\VContext\VConnectionString\VUsername\VPassword\VxaoDbName\VOSLevelAuthentication\VXMLProperties"
+      F14 "10g\Vccora10g\V1.0\VV1;10:\"10g\":ccora10g;11:\"11g\":ccora11g\Vccora10g,ccora11g\V1.0,1.0\Vlink\V-1\V0\V0\Vfalse\VOracleConnector\VEE\Vsource\V/Connection/Server\V/Connection/Username\V/Connection/Password\V/Connection/xaoDbName\V/Connection/OSLevelAuthentication\V<?xml version='1.0' encoding='UTF-16'?><Properties version='1.1'><Common><Context type='int'>1</Context><Variant type='string'>10g</Variant><DescriptorVersion type='string'>1.0</DescriptorVersion><PartitionType type='int'>-1</PartitionType><RCP type='int'>0</RCP></Common><Connection><Server modified='1' type='string'><![CDATA[#PS_CanandaWells_Database.DSNName#]]></Server><Username modified='1' type='string'><![CDATA[#PS_CanandaWells_Database.UserName#]]></Username><Password modified='1' type='string'><![CDATA[#PS_CanandaWells_Database.Password#]]></Password><OSLevelAuthentication type='bool'><![CDATA[0]]></OSLevelAuthentication><Version modified='1' type='string'><![CDATA[10g]]></Version></Connection><Usage><ReadMode type='int'><![CDATA[0]]></ReadMode><GenerateSQL modified='1' type='bool'><![CDATA[0]]></GenerateSQL><EnableQuotedIDs type='bool'><![CDATA[0]]></EnableQuotedIDs><SQL><SelectStatement collapsed='1' modified='1' type='string'><![CDATA[SELECT PDEN_ID,PDEN_TYPE,SOURCE,STRAT_UNIT_ID,TOP_DEPTH,BASE_DEPTH,COMPLETION_TOP,COMPLETION_BASE,PROVINCE_STATE,ROW_CREATED_BY,ROW_CREATED_DATE,ROW_CHANGED_BY,ROW_CHANGED_DATE,ROW_QUALITY,STRAT_UNIT_AGE,BASE_STRAT_AGE,COMPLETION_DATE,PLUGBACK_DATE,STRAT_NAME_SET_ID FROM PDEN_PROD_ZONE where PROVINCE_STATE='#Province_Code#']]><ReadFromFileSelect type='bool'><![CDATA[0]]></ReadFromFileSelect><Tables collapsed='1'><Table type='string'><![CDATA[PDEN_PROD_ZONE]]></Table></Tables><Parameters collapsed='1'></Parameters><Columns collapsed='1'><Column type='string'><![CDATA[STRAT_NAME_SET_ID,STRAT_NAME_SET_ID,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[PLUGBACK_DATE,PLUGBACK_DATE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[COMPLETION_DATE,COMPLETION_DATE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[BASE_STRAT_AGE,BASE_STRAT_AGE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[STRAT_UNIT_AGE,STRAT_UNIT_AGE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[ROW_QUALITY,ROW_QUALITY,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[ROW_CHANGED_DATE,ROW_CHANGED_DATE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[ROW_CHANGED_BY,ROW_CHANGED_BY,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[ROW_CREATED_DATE,ROW_CREATED_DATE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[ROW_CREATED_BY,ROW_CREATED_BY,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[PROVINCE_STATE,PROVINCE_STATE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[COMPLETION_BASE,COMPLETION_BASE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[COMPLETION_TOP,COMPLETION_TOP,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[BASE_DEPTH,BASE_DEPTH,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[TOP_DEPTH,TOP_DEPTH,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[STRAT_UNIT_ID,STRAT_UNIT_ID,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[SOURCE,SOURCE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[PDEN_TYPE,PDEN_TYPE,PDEN_PROD_ZONE]]></Column><Column type='string'><![CDATA[PDEN_ID,PDEN_ID,PDEN_PROD_ZONE]]></Column></Columns><WhereClause type='string'><![CDATA[PROVINCE_STATE = '#Province_Code#']]></WhereClause></SelectStatement></SQL><EnablePartitionedReads collapsed='1' type='bool'><![CDATA[0]]></EnablePartitionedReads><Transaction><IsolationLevel type='int'><![CDATA[0]]></IsolationLevel><RecordCount type='int'><![CDATA[2000]]></RecordCount><EndOfWave type='int'><![CDATA[0]]></EndOfWave></Transaction><Session><ArraySize type='int'><![CDATA[2000]]></ArraySize><PrefetchRowCount type='int'><![CDATA[1]]></PrefetchRowCount><PrefetchMemorySize type='int'><![CDATA[0]]></PrefetchMemorySize><PassLobLocator collapsed='1' type='bool'><![CDATA[0]]></PassLobLocator><BFILEasBLOB type='bool'><![CDATA[0]]></BFILEasBLOB><TreatWarningsAsErrors type='bool'><![CDATA[0]]></TreatWarningsAsErrors><TreatFetchTruncateAsError type='bool'><![CDATA[1]]></TreatFetchTruncateAsError></Session><BeforeAfter collapsed='1' type='bool'><![CDATA[0]]></BeforeAfter><ApplicationFailoverControl collapsed='1' type='bool'><![CDATA[0]]></ApplicationFailoverControl><LimitRows collapsed='1' type='bool'><![CDATA[0]]></LimitRows></Usage></Properties >"
+      F16 "OracleConnectorPX"
+      F23 "0\V0\V0\V0\V0\V0\V0\V2\V2\V2\V11\V0\V0\V0\V0\V0\V1\V0\V0\V0"
+      F31 "Jb_001_Ex_Pden_Prod_Zone.oc_Pden_ProdZone"
+      F32 "-1.-1"
+      F40 "1"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "Jb_001_Ex_Pden_Prod_Zone.oc_Pden_ProdZone.lnk_ProdZone"
+      F1 "INPIN"
+      F3 "11.3///60/C"
+      F5 "19"
+      F16 "Jb_001_Ex_Pden_Prod_Zone.oc_Pden_ProdZone\VJb_001_Ex_Pden_Prod_Zone.ds_PdenProdZone"
+      F21 "PDEN_ID\VPDEN_TYPE\VSOURCE\VSTRAT_UNIT_ID\VTOP_DEPTH\VBASE_DEPTH\VCOMPLETION_TOP\VCOMPLETION_BASE\VPROVINCE_STATE\VROW_CREATED_BY\VROW_CREATED_DATE\VROW_CHANGED_BY\VROW_CHANGED_DATE\VROW_QUALITY\VSTRAT_UNIT_AGE\VBASE_STRAT_AGE\VCOMPLETION_DATE\VPLUGBACK_DATE\VSTRAT_NAME_SET_ID"
+      F22 "1\V1\V1\V1\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0"
+      F25 "12\V12\V12\V12\V3\V3\V3\V3\V12\V12\V11\V12\V11\V12\V3\V3\V11\V11\V12"
+      F26 "40\V24\V20\V20\V9\V9\V9\V9\V20\V30\V0\V30\V0\V20\V12\V12\V0\V0\V20"
+      F27 "0\V0\V0\V0\V2\V2\V2\V2\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0"
+      F28 "0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0\V0"
+      F29 "THE UNIQUE IDENTIFIER FOR THE PRODUCING ENTITY\VTHE TYPE OF PRODUCTION ENTITY\VTHE INDIVIDUAL, COMPANY, STATE, OR GOVERNMENT AGENCY DESIGNATED AS THE SOURCE OF INFORMATION FOR THIS ROW\VUNIQUE IDENTIFIER FOR THE STRATIGRAPHIC UNIT\VMEASURED DEPTH FROM THE SURFACE TO THE TOP OF THE PRODUCING INTERVAL\VMEASURED DEPTH FROM THE SURFACE TO THE BASE OF THE PRODUCING INTERVAL\VTHE MEASURED DEPTH OF THE TOP OF THE COMPLETED INTERVAL\V\VTHE PROVINCE/STATE ASSIGNED TO THE WELL\VSYSTEM USER WHO CREATED THIS ROW OF DATA\VDATE THAT THE ROW WAS CREATED\VAPPLICATION LOGIN ID OF THE USER WHO LAST CHANGED THE ROW\VSYSTEM DATE OF THE LAST TIME THE ROW WAS CHANGED\VA SET OF VALUES INDICATING THE QUALITY OF DATA IN THIS ROW\VTHE NUMERIC VALUE ASSIGNED TO THE TOP OF THE FORMATION\VA NUMERIC VALUE ASSIGNED TO THE BASE OF THE PRODUCING FORMATION AS THE PRODUCING FORMATION IS REPRESENTED ON A STRATIGRAPHIC CHART\VCOMPLETION_DATE:  The date corresponding to the first non-drilling status reported by the well.\VTHE DATE THE PLUGBACK OPERATIONS WERE RUN ON THE WELL\VA UNIQUE NAME OF THE THE SET OF STRATIGRAPAHIC NAMES"
+      F39 "lnk_ProdZone"
+      F40 "0\V0\V0\V0\V1\V1\V1\V1\V0\V1\V1\V1\V1\V1\V1\V1\V1\V1\V1"
+      F50 "\V"
+      F79 "q9cal-1dinfap03.ihs.internal.corp\\EP_NA_CDN_Wells\\Database\\DCALVLT\\PPDM37_VLT.PDEN_PROD_ZONE"
+   END DSRECORD
+   COMMENT No program sources in executable job
+   COMMENT No program binaries in executable job
+   BEGIN DSSCRIPT
+      Identifier "OshExecuter.sh"
+      TERMINATOR =+=+=+=
+#!/bin/sh
+# Shell script for Datastage to execute an osh script, generated at 2016-09-25 23:44:35
+# Compiler runtime stamp 11.3///60/C
+#
+# Parameters:
+# $1 - Run indicator: R=normal run, P=performance wrappered run
+# $2 - Environment variable file name - dummy
+# $3... - Osh / performance checker command line arguments
+RunIndicator=$1
+DummyEnv=$2
+shift
+shift
+if test ! -x "$APT_ORCHHOME/bin/osh"
+  then echo '##OSHRETVAL NOOSH'
+  exit 1
+fi
+# Test for resource estimation option.
+if test $RunIndicator = P
+  then $APT_ORCHHOME/bin/orchresest "$@" 2>&1 &
+  else $APT_ORCHHOME/bin/osh "$@" 2>&1 &
+fi
+oshpid=$!
+# Write the pid of the conductor process
+echo '##OSHPID' $oshpid
+wait $oshpid
+oshcode=$?
+oshdir=`dirname $0`
+# Write the terminating string
+echo '##OSHRETVAL' $oshcode > $oshdir/../RT_SCTEMP/$oshpid.retval
+echo '##OSHRETVAL' $oshcode
+# end of script
+=+=+=+=
+   END DSSCRIPT
+   BEGIN DSSCRIPT
+      Identifier "OshScript.osh"
+      TERMINATOR =+=+=+=
+# OSH / orchestrate script for Job Jb_001_Ex_Pden_Prod_Zone compiled at 23:44:35 25 SEP 2016
+#################################################################
+#### STAGE: ds_PdenProdZone
+## Operator
+copy
+## General options
+[ident('ds_PdenProdZone')]
+## Inputs
+0< [] 'oc_Pden_ProdZone:lnk_ProdZone.v'
+## Outputs
+0>| [ds] '[&"PS_CanandaWells_Path.ProcessingPath"]/PdenProdZone_Fac_Prev_[&"InvokeId"].ds'
+;
+#################################################################
+#### STAGE: oc_Pden_ProdZone
+## Operator
+pxbridge
+## Operator options
+-Orientation link
+-XMLProperties '<?xml version=\\'1.0\\' encoding=\\'UTF-16\\'?><Properties version=\\'1.1\\'><Common><Context type=\\'int\\'>1</Context><Variant type=\\'string\\'>10g</Variant><DescriptorVersion type=\\'string\\'>1.0</DescriptorVersion><PartitionType type=\\'int\\'>-1</PartitionType><RCP type=\\'int\\'>0</RCP></Common><Connection><Server modified=\\'1\\' type=\\'string\\'><![CDATA[[&"PS_CanandaWells_Database.DSNName"]]]></Server><Username modified=\\'1\\' type=\\'string\\'><![CDATA[[&"PS_CanandaWells_Database.UserName"]]]></Username><Password modified=\\'1\\' type=\\'string\\'><![CDATA[[&"PS_CanandaWells_Database.Password"]]]></Password><OSLevelAuthentication type=\\'bool\\'><![CDATA[0]]></OSLevelAuthentication><Version modified=\\'1\\' type=\\'string\\'><![CDATA[10g]]></Version></Connection><Usage><ReadMode type=\\'int\\'><![CDATA[0]]></ReadMode><GenerateSQL modified=\\'1\\' type=\\'bool\\'><![CDATA[0]]></GenerateSQL><EnableQuotedIDs type=\\'bool\\'><![CDATA[0]]></EnableQuotedIDs><SQL><SelectStatement collapsed=\\'1\\' modified=\\'1\\' type=\\'string\\'><![CDATA[SELECT PDEN_ID,PDEN_TYPE,SOURCE,STRAT_UNIT_ID,TOP_DEPTH,BASE_DEPTH,COMPLETION_TOP,COMPLETION_BASE,PROVINCE_STATE,ROW_CREATED_BY,ROW_CREATED_DATE,ROW_CHANGED_BY,ROW_CHANGED_DATE,ROW_QUALITY,STRAT_UNIT_AGE,BASE_STRAT_AGE,COMPLETION_DATE,PLUGBACK_DATE,STRAT_NAME_SET_ID FROM PDEN_PROD_ZONE where PROVINCE_STATE=\\'[&"Province_Code"]\\']]><ReadFromFileSelect type=\\'bool\\'><![CDATA[0]]></ReadFromFileSelect><Tables collapsed=\\'1\\'><Table type=\\'string\\'><![CDATA[PDEN_PROD_ZONE]]></Table></Tables><Parameters collapsed=\\'1\\'></Parameters><Columns collapsed=\\'1\\'><Column type=\\'string\\'><![CDATA[STRAT_NAME_SET_ID,STRAT_NAME_SET_ID,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[PLUGBACK_DATE,PLUGBACK_DATE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[COMPLETION_DATE,COMPLETION_DATE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[BASE_STRAT_AGE,BASE_STRAT_AGE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[STRAT_UNIT_AGE,STRAT_UNIT_AGE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[ROW_QUALITY,ROW_QUALITY,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[ROW_CHANGED_DATE,ROW_CHANGED_DATE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[ROW_CHANGED_BY,ROW_CHANGED_BY,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[ROW_CREATED_DATE,ROW_CREATED_DATE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[ROW_CREATED_BY,ROW_CREATED_BY,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[PROVINCE_STATE,PROVINCE_STATE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[COMPLETION_BASE,COMPLETION_BASE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[COMPLETION_TOP,COMPLETION_TOP,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[BASE_DEPTH,BASE_DEPTH,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[TOP_DEPTH,TOP_DEPTH,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[STRAT_UNIT_ID,STRAT_UNIT_ID,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[SOURCE,SOURCE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[PDEN_TYPE,PDEN_TYPE,PDEN_PROD_ZONE]]></Column><Column type=\\'string\\'><![CDATA[PDEN_ID,PDEN_ID,PDEN_PROD_ZONE]]></Column></Columns><WhereClause type=\\'string\\'><![CDATA[PROVINCE_STATE = \\'[&"Province_Code"]\\']]></WhereClause></SelectStatement></SQL><EnablePartitionedReads collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></EnablePartitionedReads><Transaction><IsolationLevel type=\\'int\\'><![CDATA[0]]></IsolationLevel><RecordCount type=\\'int\\'><![CDATA[2000]]></RecordCount><EndOfWave type=\\'int\\'><![CDATA[0]]></EndOfWave></Transaction><Session><ArraySize type=\\'int\\'><![CDATA[2000]]></ArraySize><PrefetchRowCount type=\\'int\\'><![CDATA[1]]></PrefetchRowCount><PrefetchMemorySize type=\\'int\\'><![CDATA[0]]></PrefetchMemorySize><PassLobLocator collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></PassLobLocator><BFILEasBLOB type=\\'bool\\'><![CDATA[0]]></BFILEasBLOB><TreatWarningsAsErrors type=\\'bool\\'><![CDATA[0]]></TreatWarningsAsErrors><TreatFetchTruncateAsError type=\\'bool\\'><![CDATA[1]]></TreatFetchTruncateAsError></Session><BeforeAfter collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></BeforeAfter><ApplicationFailoverControl collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></ApplicationFailoverControl><LimitRows collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></LimitRows></Usage></Properties >'
+-connector '{
+   variant=\\'10g\\', 
+   library=ccora10g, 
+   version=1.0, 
+   variantlist=\\'V1;10:"10g":ccora10g;11:"11g":ccora11g\\', 
+   versionlist=\\'1.0,1.0\\', 
+   name=OracleConnector
+}'
+-source 0 '{
+      DSDescription={PDEN_ID=\\'THE UNIQUE IDENTIFIER FOR THE PRODUCING ENTITY\\', PDEN_TYPE=\\'THE TYPE OF PRODUCTION ENTITY\\', SOURCE=\\'THE INDIVIDUAL\\, COMPANY\\, STATE\\, OR GOVERNMENT AGENCY DESIGNATED AS THE SOURCE OF INFORMATION FOR THIS ROW\\', STRAT_UNIT_ID=\\'UNIQUE IDENTIFIER FOR THE STRATIGRAPHIC UNIT\\', TOP_DEPTH=\\'MEASURED DEPTH FROM THE SURFACE TO THE TOP OF THE PRODUCING INTERVAL\\', BASE_DEPTH=\\'MEASURED DEPTH FROM THE SURFACE TO THE BASE OF THE PRODUCING INTERVAL\\', COMPLETION_TOP=\\'THE MEASURED DEPTH OF THE TOP OF THE COMPLETED INTERVAL\\', PROVINCE_STATE=\\'THE PROVINCE\\/STATE ASSIGNED TO THE WELL\\', ROW_CREATED_BY=\\'SYSTEM USER WHO CREATED THIS ROW OF DATA\\', ROW_CREATED_DATE=\\'DATE THAT THE ROW WAS CREATED\\', ROW_CHANGED_BY=\\'APPLICATION LOGIN ID OF THE USER WHO LAST CHANGED THE ROW\\', ROW_CHANGED_DATE=\\'SYSTEM DATE OF THE LAST TIME THE ROW WAS CHANGED\\', ROW_QUALITY=\\'A SET OF VALUES INDICATING THE QUALITY OF DATA IN THIS ROW\\', STRAT_UNIT_AGE=\\'THE NUMERIC VALUE ASSIGNED TO THE TOP OF THE FORMATION\\', BASE_STRAT_AGE=\\'A NUMERIC VALUE ASSIGNED TO THE BASE OF THE PRODUCING FORMATION AS THE PRODUCING FORMATION IS REPRESENTED ON A STRATIGRAPHIC CHART\\', COMPLETION_DATE=\\'COMPLETION_DATE\\:  The date corresponding to the first non\\-drilling status reported by the well\\.\\', PLUGBACK_DATE=\\'THE DATE THE PLUGBACK OPERATIONS WERE RUN ON THE WELL\\', STRAT_NAME_SET_ID=\\'A UNIQUE NAME OF THE THE SET OF STRATIGRAPAHIC NAMES\\'}, 
+      DSIsKey={PDEN_ID=1, PDEN_TYPE=1, SOURCE=1, STRAT_UNIT_ID=1}, 
+      DSSQLType={PDEN_ID=12, PDEN_TYPE=12, SOURCE=12, STRAT_UNIT_ID=12, TOP_DEPTH=3, BASE_DEPTH=3, COMPLETION_TOP=3, COMPLETION_BASE=3, PROVINCE_STATE=12, ROW_CREATED_BY=12, ROW_CREATED_DATE=11, ROW_CHANGED_BY=12, ROW_CHANGED_DATE=11, ROW_QUALITY=12, STRAT_UNIT_AGE=3, BASE_STRAT_AGE=3, COMPLETION_DATE=11, PLUGBACK_DATE=11, STRAT_NAME_SET_ID=12}, 
+      DSSQLPrecision={PDEN_ID=40, PDEN_TYPE=24, SOURCE=20, STRAT_UNIT_ID=20, TOP_DEPTH=9, BASE_DEPTH=9, COMPLETION_TOP=9, COMPLETION_BASE=9, PROVINCE_STATE=20, ROW_CREATED_BY=30, ROW_CHANGED_BY=30, ROW_QUALITY=20, STRAT_UNIT_AGE=12, BASE_STRAT_AGE=12, STRAT_NAME_SET_ID=20}, 
+      DSSQLScale={TOP_DEPTH=2, BASE_DEPTH=2, COMPLETION_TOP=2, COMPLETION_BASE=2}, 
+      DSNativeType={PDEN_ID=\\'VARCHAR2\\', PDEN_TYPE=\\'VARCHAR2\\', SOURCE=\\'VARCHAR2\\', STRAT_UNIT_ID=\\'VARCHAR2\\', TOP_DEPTH=\\'NUMBER\\', BASE_DEPTH=\\'NUMBER\\', COMPLETION_TOP=\\'NUMBER\\', COMPLETION_BASE=\\'NUMBER\\', PROVINCE_STATE=\\'VARCHAR2\\', ROW_CREATED_BY=\\'VARCHAR2\\', ROW_CREATED_DATE=\\'DATE\\', ROW_CHANGED_BY=\\'VARCHAR2\\', ROW_CHANGED_DATE=\\'DATE\\', ROW_QUALITY=\\'VARCHAR2\\', STRAT_UNIT_AGE=\\'NUMBER\\', BASE_STRAT_AGE=\\'NUMBER\\', COMPLETION_DATE=\\'DATE\\', PLUGBACK_DATE=\\'DATE\\', STRAT_NAME_SET_ID=\\'VARCHAR2\\'}, 
+      DSSchema=\\'record
+         (
+           PDEN_ID\\:string\\[max\\=40\\]\\;
+           PDEN_TYPE\\:string\\[max\\=24\\]\\;
+           SOURCE\\:string\\[max\\=20\\]\\;
+           STRAT_UNIT_ID\\:string\\[max\\=20\\]\\;
+           TOP_DEPTH\\:nullable decimal\\[9\\,2\\]\\;
+           BASE_DEPTH\\:nullable decimal\\[9\\,2\\]\\;
+           COMPLETION_TOP\\:nullable decimal\\[9\\,2\\]\\;
+           COMPLETION_BASE\\:nullable decimal\\[9\\,2\\]\\;
+           PROVINCE_STATE\\:string\\[max\\=20\\]\\;
+           ROW_CREATED_BY\\:nullable string\\[max\\=30\\]\\;
+           ROW_CREATED_DATE\\:nullable timestamp\\;
+           ROW_CHANGED_BY\\:nullable string\\[max\\=30\\]\\;
+           ROW_CHANGED_DATE\\:nullable timestamp\\;
+           ROW_QUALITY\\:nullable string\\[max\\=20\\]\\;
+           STRAT_UNIT_AGE\\:nullable decimal\\[12\\,0\\]\\;
+           BASE_STRAT_AGE\\:nullable decimal\\[12\\,0\\]\\;
+           COMPLETION_DATE\\:nullable timestamp\\;
+           PLUGBACK_DATE\\:nullable timestamp\\;
+           STRAT_NAME_SET_ID\\:nullable string\\[max\\=20\\]\\;
+         )\\'
+}'
+   
+## General options
+[ident('oc_Pden_ProdZone'); jobmon_ident('oc_Pden_ProdZone')]
+## Outputs
+0> [modify (
+  PDEN_ID:not_nullable string[max=40]=PDEN_ID;
+  PDEN_TYPE:not_nullable string[max=24]=PDEN_TYPE;
+  SOURCE:not_nullable string[max=20]=SOURCE;
+  STRAT_UNIT_ID:not_nullable string[max=20]=STRAT_UNIT_ID;
+  TOP_DEPTH:nullable decimal[9,2]=TOP_DEPTH;
+  BASE_DEPTH:nullable decimal[9,2]=BASE_DEPTH;
+  COMPLETION_TOP:nullable decimal[9,2]=COMPLETION_TOP;
+  COMPLETION_BASE:nullable decimal[9,2]=COMPLETION_BASE;
+  PROVINCE_STATE:not_nullable string[max=20]=PROVINCE_STATE;
+  ROW_CREATED_BY:nullable string[max=30]=ROW_CREATED_BY;
+  ROW_CREATED_DATE:nullable timestamp=ROW_CREATED_DATE;
+  ROW_CHANGED_BY:nullable string[max=30]=ROW_CHANGED_BY;
+  ROW_CHANGED_DATE:nullable timestamp=ROW_CHANGED_DATE;
+  ROW_QUALITY:nullable string[max=20]=ROW_QUALITY;
+  STRAT_UNIT_AGE:nullable decimal[12,0]=STRAT_UNIT_AGE;
+  BASE_STRAT_AGE:nullable decimal[12,0]=BASE_STRAT_AGE;
+  COMPLETION_DATE:nullable timestamp=COMPLETION_DATE;
+  PLUGBACK_DATE:nullable timestamp=PLUGBACK_DATE;
+  STRAT_NAME_SET_ID:nullable string[max=20]=STRAT_NAME_SET_ID;
+keep
+  PDEN_ID,PDEN_TYPE,SOURCE,STRAT_UNIT_ID,
+  TOP_DEPTH,BASE_DEPTH,COMPLETION_TOP,COMPLETION_BASE,
+  PROVINCE_STATE,ROW_CREATED_BY,ROW_CREATED_DATE,ROW_CHANGED_BY,
+  ROW_CHANGED_DATE,ROW_QUALITY,STRAT_UNIT_AGE,BASE_STRAT_AGE,
+  COMPLETION_DATE,PLUGBACK_DATE,STRAT_NAME_SET_ID;
+)] 'oc_Pden_ProdZone:lnk_ProdZone.v'
+;
+# End of OSH code
+=+=+=+=
+   END DSSCRIPT
+END DSEXECJOB
